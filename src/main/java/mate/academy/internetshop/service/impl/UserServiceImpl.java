@@ -1,0 +1,36 @@
+package mate.academy.internetshop.service.impl;
+
+import mate.academy.internetshop.dao.UserDao;
+import mate.academy.internetshop.lib.Service;
+import mate.academy.internetshop.model.User;
+import mate.academy.internetshop.service.UserService;
+
+@Service
+public class UserServiceImpl implements UserService {
+    private UserDao userDao;
+
+    @Override
+    public User create(User user) {
+        return userDao.create(user);
+    }
+
+    @Override
+    public User get(Long id) {
+        return userDao.get(id);
+    }
+
+    @Override
+    public User update(User user) {
+        return userDao.update(user);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        userDao.deleteById(id);
+    }
+
+    @Override
+    public void deleteByUser(User user) {
+        userDao.deleteByUser(user);
+    }
+}
