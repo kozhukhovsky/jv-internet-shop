@@ -5,11 +5,13 @@ import mate.academy.internetshop.lib.IdGenerator;
 
 public class Bucket {
     private final Long id;
-    private List<Item> items;
-    private Long orderId;
+    private final Long userId;
+    private final List<Item> items;
 
-    public Bucket() {
+    public Bucket(Long userId, List<Item> items) {
         id = IdGenerator.getNextBucketId();
+        this.items = items;
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -20,15 +22,7 @@ public class Bucket {
         return items;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
-    public Long getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public Long getUserId() {
+        return userId;
     }
 }

@@ -5,11 +5,13 @@ import mate.academy.internetshop.lib.IdGenerator;
 
 public class Order {
     private final Long id;
-    private List<Item> items;
-    private Long userId;
+    private final Long userId;
+    private final List<Item> items;
 
-    public Order() {
+    public Order(List<Item> items, Long userId) {
         id = IdGenerator.getNextOrderId();
+        this.items = items;
+        this.userId = userId;
     }
 
     public Long getId() {
@@ -20,15 +22,9 @@ public class Order {
         return items;
     }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
-
     public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+
 }

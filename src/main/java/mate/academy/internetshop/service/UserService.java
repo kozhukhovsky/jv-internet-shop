@@ -1,5 +1,6 @@
 package mate.academy.internetshop.service;
 
+import java.util.List;
 import mate.academy.internetshop.model.User;
 
 public interface UserService {
@@ -9,7 +10,9 @@ public interface UserService {
 
     User update(User user);
 
-    void deleteById(Long id);
+    User deleteById(Long id);
 
-    void deleteByUser(User user);
+    User deleteByUser(User user);
+
+    List getOrders(Long userId);
 }

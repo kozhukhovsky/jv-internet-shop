@@ -9,7 +9,7 @@ public interface BucketDao {
 
     Bucket update(Bucket bucket);
 
-    void deleteById(Long id);
+    Bucket deleteById(Long id);
 
-    void deleteByBucket(Bucket bucket);
+    Bucket deleteByBucket(Bucket bucket);
 }

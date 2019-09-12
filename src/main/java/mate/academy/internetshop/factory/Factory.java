@@ -1,4 +1,4 @@
-package mate.academy.internetshop;
+package mate.academy.internetshop.factory;
 
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.ItemDao;
@@ -27,7 +27,6 @@ public class Factory {
     private static BucketService bucketService;
     private static OrderService orderService;
     private static UserService userService;
-
 
     public static ItemDao getItemDao() {
         if (itemDao == null) {

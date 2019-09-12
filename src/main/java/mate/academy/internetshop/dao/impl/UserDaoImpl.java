@@ -1,6 +1,8 @@
 package mate.academy.internetshop.dao.impl;
 
+import java.util.NoSuchElementException;
 import mate.academy.internetshop.dao.UserDao;
+import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.Dao;
 import mate.academy.internetshop.model.User;
 
@@ -8,26 +10,41 @@ import mate.academy.internetshop.model.User;
 public class UserDaoImpl implements UserDao {
     @Override
     public User create(User user) {
-        return null;
+        Storage.users.add(user);
+        return user;
     }
 
     @Override
     public User get(Long id) {
-        return null;
+        return Storage.users
+            .stream()
+            .filter(user -> user.getId().equals(id))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException("Can't find user with id " + id));
     }
 
     @Override
     public User update(User user) {
-        return null;
+        for (int i = 0; i < Storage.users.size(); i++) {
+            if (Storage.users.get(i).getId().equals(user.getId())) {
+                Storage.users.set(i, user);
+                return user;
+            }
+        }
+        throw new NoSuchElementException();
     }
 
     @Override
-    public void deleteById(Long id) {
-
+    public User deleteById(Long id) {
+        User deletedUser = get(id);
+        Storage.users.removeIf(user -> user.getId().equals(id));
+        return deletedUser;
     }
 
     @Override
-    public void deleteByUser(User user) {
-
+    public User deleteByUser(User user) {
+        get(user.getId());
+        Storage.users.removeIf(sourceUser -> sourceUser.getId().equals(user.getId()));
+        return user;
     }
 }

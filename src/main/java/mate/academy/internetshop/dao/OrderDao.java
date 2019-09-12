@@ -1,6 +1,5 @@
 package mate.academy.internetshop.dao;
 
-import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Order;
 
 public interface OrderDao {
@@ -10,7 +9,7 @@ public interface OrderDao {
 
     Order update(Order order);
 
-    void deleteById(Long id);
+    Order deleteById(Long id);
 
-    void deleteByOrder(Order order);
+    Order deleteByOrder(Order order);
 }

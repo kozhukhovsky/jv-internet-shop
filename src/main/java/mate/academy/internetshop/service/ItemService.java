@@ -9,7 +9,7 @@ public interface ItemService {
 
     Item update(Item item);
 
-    void deleteById(Long id);
+    Item deleteById(Long id);
 
-    void deleteByItem(Item item);
+    Item deleteByItem(Item item);
 }

@@ -1,6 +1,8 @@
 package mate.academy.internetshop.service.impl;
 
+import java.util.List;
 import mate.academy.internetshop.dao.UserDao;
+import mate.academy.internetshop.factory.Factory;
 import mate.academy.internetshop.lib.Inject;
 import mate.academy.internetshop.lib.Service;
 import mate.academy.internetshop.model.User;
@@ -9,7 +11,7 @@ import mate.academy.internetshop.service.UserService;
 @Service
 public class UserServiceImpl implements UserService {
     @Inject
-    private UserDao userDao;
+    private UserDao userDao = Factory.getUserDao();
 
     @Override
     public User create(User user) {
@@ -27,12 +29,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(Long id) {
-        userDao.deleteById(id);
+    public User deleteById(Long id) {
+        return userDao.deleteById(id);
     }
 
     @Override
-    public void deleteByUser(User user) {
-        userDao.deleteByUser(user);
+    public User deleteByUser(User user) {
+        return userDao.deleteByUser(user);
+    }
+
+    @Override
+    public List getOrders(Long userId) {
+        return userDao.get(userId).getOrders();
     }
 }

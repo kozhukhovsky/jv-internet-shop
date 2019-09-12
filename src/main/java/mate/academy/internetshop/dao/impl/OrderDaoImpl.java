@@ -1,34 +1,50 @@
 package mate.academy.internetshop.dao.impl;
 
+import java.util.NoSuchElementException;
 import mate.academy.internetshop.dao.OrderDao;
+import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.Dao;
-import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Order;
 
 @Dao
 public class OrderDaoImpl implements OrderDao {
     @Override
     public Order create(Order order) {
-        return null;
+        Storage.orders.add(order);
+        return order;
     }
 
     @Override
     public Order get(Long id) {
-        return null;
+        return Storage.orders
+            .stream()
+            .filter(order -> order.getId().equals(id))
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException("Can't find order with id " + id));
     }
 
     @Override
     public Order update(Order order) {
-        return null;
+        for (int i = 0; i < Storage.orders.size(); i++) {
+            if (Storage.orders.get(i).getId().equals(order.getId())) {
+                Storage.orders.set(i, order);
+                return order;
+            }
+        }
+        throw new NoSuchElementException();
     }
 
     @Override
-    public void deleteById(Long id) {
-
+    public Order deleteById(Long id) {
+        Order deletedOrder = get(id);
+        Storage.orders.removeIf(order -> order.getId().equals(id));
+        return deletedOrder;
     }
 
     @Override
-    public void deleteByOrder(Bucket bucket) {
-
+    public Order deleteByOrder(Order order) {
+        get(order.getId());
+        Storage.orders.removeIf(sourceOder -> sourceOder.getId().equals(order.getId()));
+        return order;
     }
 }
