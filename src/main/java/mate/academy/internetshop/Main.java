@@ -1,5 +1,6 @@
 package mate.academy.internetshop;
 
+import mate.academy.internetshop.lib.Injector;
 import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
@@ -12,13 +13,21 @@ import mate.academy.internetshop.service.UserService;
 
 public class Main {
     @Inject
-    private BucketService bucketService;
+    private static BucketService bucketService;
     @Inject
-    private ItemService itemService;
+    private static ItemService itemService;
     @Inject
-    private UserService userService;
+    private static UserService userService;
     @Inject
-    private OrderService orderService;
+    private static OrderService orderService;
+
+    static {
+        try {
+            Injector.injectDependency();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static void main(String[] args) {
         Main main = new Main();

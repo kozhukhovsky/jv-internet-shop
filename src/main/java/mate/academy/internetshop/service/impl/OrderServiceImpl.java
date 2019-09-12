@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import mate.academy.internetshop.dao.OrderDao;
 import mate.academy.internetshop.dao.UserDao;
-import mate.academy.internetshop.factory.Factory;
 import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.lib.annotation.Service;
 import mate.academy.internetshop.model.Order;
@@ -13,9 +12,9 @@ import mate.academy.internetshop.service.OrderService;
 @Service
 public class OrderServiceImpl implements OrderService {
     @Inject
-    private OrderDao orderDao;
+    private static OrderDao orderDao;
     @Inject
-    private UserDao userDao;
+    private static UserDao userDao;
 
     @Override
     public Order create(Order order) {
@@ -49,6 +48,4 @@ public class OrderServiceImpl implements OrderService {
         userDao.get(userId).getOrders().add(order);
         return order;
     }
-
-
 }

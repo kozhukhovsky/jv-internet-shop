@@ -25,6 +25,4 @@ public class Order {
     public Long getUserId() {
         return userId;
     }
-
-
 }
