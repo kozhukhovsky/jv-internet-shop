@@ -1,18 +1,19 @@
 package mate.academy.internetshop.model;
 
 import java.util.List;
+import mate.academy.internetshop.lib.IdGenerator;
 
 public class User {
-    private Long id;
+    private final Long id;
     private List<Order> orders;
     private Long bucketId;
 
-    public Long getId() {
-        return id;
+    public User() {
+        id = IdGenerator.getNextUserId();
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
     public List<Order> getOrders() {
