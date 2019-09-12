@@ -3,7 +3,7 @@ package mate.academy.internetshop.dao.impl;
 import java.util.NoSuchElementException;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.db.Storage;
-import mate.academy.internetshop.lib.Dao;
+import mate.academy.internetshop.lib.annotation.Dao;
 import mate.academy.internetshop.model.Item;
 
 @Dao

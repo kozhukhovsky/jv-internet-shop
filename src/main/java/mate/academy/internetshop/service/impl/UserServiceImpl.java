@@ -3,15 +3,15 @@ package mate.academy.internetshop.service.impl;
 import java.util.List;
 import mate.academy.internetshop.dao.UserDao;
 import mate.academy.internetshop.factory.Factory;
-import mate.academy.internetshop.lib.Inject;
-import mate.academy.internetshop.lib.Service;
+import mate.academy.internetshop.lib.annotation.Inject;
+import mate.academy.internetshop.lib.annotation.Service;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Inject
-    private UserDao userDao = Factory.getUserDao();
+    private UserDao userDao;
 
     @Override
     public User create(User user) {
