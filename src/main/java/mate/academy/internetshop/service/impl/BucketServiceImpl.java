@@ -3,6 +3,7 @@ package mate.academy.internetshop.service.impl;
 import java.util.List;
 import mate.academy.internetshop.dao.BucketDao;
 import mate.academy.internetshop.dao.ItemDao;
+import mate.academy.internetshop.dao.impl.BucketDaoImpl;
 import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.lib.annotation.Service;
 import mate.academy.internetshop.model.Bucket;

@@ -43,7 +43,6 @@ public class ItemDaoImpl implements ItemDao {
 
     @Override
     public Item deleteByItem(Item item) {
-        get(item.getId());
         Storage.items.removeIf(sourceItem -> sourceItem.getId().equals(item.getId()));
         return item;
     }

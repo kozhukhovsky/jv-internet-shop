@@ -43,7 +43,6 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order deleteByOrder(Order order) {
-        get(order.getId());
         Storage.orders.removeIf(sourceOder -> sourceOder.getId().equals(order.getId()));
         return order;
     }

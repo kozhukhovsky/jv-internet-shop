@@ -43,7 +43,6 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User deleteByUser(User user) {
-        get(user.getId());
         Storage.users.removeIf(sourceUser -> sourceUser.getId().equals(user.getId()));
         return user;
     }

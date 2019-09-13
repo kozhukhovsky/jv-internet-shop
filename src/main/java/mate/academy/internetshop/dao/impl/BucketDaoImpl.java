@@ -43,7 +43,6 @@ public class BucketDaoImpl implements BucketDao {
 
     @Override
     public Bucket deleteByBucket(Bucket bucket) {
-        get(bucket.getId());
         Storage.buckets.removeIf(sourceBucket -> sourceBucket.getId().equals(bucket.getId()));
         return bucket;
     }

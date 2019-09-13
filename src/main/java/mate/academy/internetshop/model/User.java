@@ -5,8 +5,8 @@ import java.util.List;
 import mate.academy.internetshop.lib.IdGenerator;
 
 public class User {
-    private final Long id;
-    private final List<Order> orders;
+    private Long id;
+    private List<Order> orders;
 
     public User() {
         id = IdGenerator.getNextUserId();
@@ -21,4 +21,7 @@ public class User {
         return orders;
     }
 
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
+    }
 }
