@@ -25,34 +25,38 @@ public class Injector {
         };
 
         for (Class clazz : classes) {
-            for (Field field : clazz.getDeclaredFields()) {
-                if (field.getDeclaredAnnotation(Inject.class) != null) {
-                    field.setAccessible(true);
-                    Class<?> type = field.getType();
-                    if (type == ItemDao.class) {
-                        field.set(null, Factory.getItemDao());
-                    }
-                    if (type == BucketDao.class) {
-                        field.set(null, Factory.getBucketDao());
-                    }
-                    if (type == OrderDao.class) {
-                        field.set(null, Factory.getOrderDao());
-                    }
-                    if (type == UserDao.class) {
-                        field.set(null, Factory.getUserDao());
-                    }
-                    if (type == BucketService.class) {
-                        field.set(null, Factory.getBucketService());
-                    }
-                    if (type == ItemService.class) {
-                        field.set(null, Factory.getItemService());
-                    }
-                    if (type == OrderService.class) {
-                        field.set(null, Factory.getOrderService());
-                    }
-                    if (type == UserService.class) {
-                        field.set(null, Factory.getUserService());
-                    }
+            injectDependencyForClass(clazz);
+        }
+    }
+
+    private static void injectDependencyForClass(Class<?> clazz) throws IllegalAccessException {
+        for (Field field : clazz.getDeclaredFields()) {
+            if (field.getDeclaredAnnotation(Inject.class) != null) {
+                field.setAccessible(true);
+                Class<?> type = field.getType();
+                if (type == ItemDao.class) {
+                    field.set(null, Factory.getItemDao());
+                }
+                if (type == BucketDao.class) {
+                    field.set(null, Factory.getBucketDao());
+                }
+                if (type == OrderDao.class) {
+                    field.set(null, Factory.getOrderDao());
+                }
+                if (type == UserDao.class) {
+                    field.set(null, Factory.getUserDao());
+                }
+                if (type == BucketService.class) {
+                    field.set(null, Factory.getBucketService());
+                }
+                if (type == ItemService.class) {
+                    field.set(null, Factory.getItemService());
+                }
+                if (type == OrderService.class) {
+                    field.set(null, Factory.getOrderService());
+                }
+                if (type == UserService.class) {
+                    field.set(null, Factory.getUserService());
                 }
             }
         }
