@@ -57,7 +57,7 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public List getAllItems(Long bucketId) {
+    public List<Item> getAllItems(Long bucketId) {
         return bucketDao.get(bucketId).getItems();
     }
 }
