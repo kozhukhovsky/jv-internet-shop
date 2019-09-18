@@ -7,21 +7,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.annotation.Inject;
-import mate.academy.internetshop.service.UserService;
+import mate.academy.internetshop.service.ItemService;
 
-@WebServlet("/")
-public class IndexController extends HttpServlet {
+@WebServlet("/deleteItem")
+public class DeleteItemController extends HttpServlet {
     @Inject
-    private static UserService userService;
+    private static ItemService itemService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        if (userService.getAll().size() > 0) {
-            req.getRequestDispatcher("WEB-INF/views/index.jsp").forward(req, resp);
-        } else {
-            resp.sendRedirect(req.getContextPath() + "/registration");
-        }
+        Long itemId = Long.valueOf(req.getParameter("item_id"));
+        itemService.deleteById(itemId);
 
+        resp.sendRedirect(req.getContextPath() + "/items");
     }
 }

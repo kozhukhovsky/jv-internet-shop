@@ -1,5 +1,6 @@
 package mate.academy.internetshop.dao;
 
+import java.util.List;
 import mate.academy.internetshop.model.User;
 
 public interface UserDao {
@@ -12,4 +13,6 @@ public interface UserDao {
     User deleteById(Long id);
 
     User deleteByUser(User user);
+
+    List<User> getAll();
 }

@@ -7,21 +7,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.annotation.Inject;
-import mate.academy.internetshop.service.UserService;
+import mate.academy.internetshop.model.Bucket;
+import mate.academy.internetshop.service.BucketService;
 
-@WebServlet("/")
-public class IndexController extends HttpServlet {
+@WebServlet("/createBucket")
+public class CreateBucketController extends HttpServlet {
     @Inject
-    private static UserService userService;
+    private static BucketService bucketService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        if (userService.getAll().size() > 0) {
-            req.getRequestDispatcher("WEB-INF/views/index.jsp").forward(req, resp);
-        } else {
-            resp.sendRedirect(req.getContextPath() + "/registration");
-        }
+        Long userId = Long.valueOf(req.getParameter("user_id"));
+        Bucket bucket = new Bucket(userId);
+        bucketService.create(bucket);
 
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 }

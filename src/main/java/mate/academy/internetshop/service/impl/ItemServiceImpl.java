@@ -1,5 +1,6 @@
 package mate.academy.internetshop.service.impl;
 
+import java.util.List;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.lib.annotation.Service;
@@ -34,5 +35,10 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item deleteByItem(Item item) {
         return itemDao.deleteByItem(item);
+    }
+
+    @Override
+    public List<Item> getAll() {
+        return itemDao.getAll();
     }
 }

@@ -9,19 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.service.UserService;
 
-@WebServlet("/")
-public class IndexController extends HttpServlet {
+@WebServlet("/deleteUser")
+public class DeleteUserController extends HttpServlet {
     @Inject
     private static UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        if (userService.getAll().size() > 0) {
-            req.getRequestDispatcher("WEB-INF/views/index.jsp").forward(req, resp);
-        } else {
-            resp.sendRedirect(req.getContextPath() + "/registration");
-        }
+        Long userId = Long.valueOf(req.getParameter("user_id"));
+        userService.deleteById(userId);
 
+        resp.sendRedirect(req.getContextPath() + "/users");
     }
+
 }

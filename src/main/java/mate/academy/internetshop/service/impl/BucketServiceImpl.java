@@ -60,4 +60,11 @@ public class BucketServiceImpl implements BucketService {
     public List<Item> getAllItems(Long bucketId) {
         return bucketDao.get(bucketId).getItems();
     }
+
+    @Override
+    public Item removeItemFromBucket(Long bucketId, Long itemId) {
+        Item removedItem = getAllItems(bucketId).get(Integer.parseInt(itemId.toString()));
+        getAllItems(bucketId).remove(Integer.parseInt(itemId.toString()));
+        return removedItem;
+    }
 }

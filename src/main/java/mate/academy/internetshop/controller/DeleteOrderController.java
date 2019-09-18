@@ -9,19 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.service.UserService;
 
-@WebServlet("/")
-public class IndexController extends HttpServlet {
+@WebServlet("/deleteOrder")
+public class DeleteOrderController extends HttpServlet {
+    private static final long TEMP_USER_ID = 0L;
     @Inject
     private static UserService userService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        if (userService.getAll().size() > 0) {
-            req.getRequestDispatcher("WEB-INF/views/index.jsp").forward(req, resp);
-        } else {
-            resp.sendRedirect(req.getContextPath() + "/registration");
-        }
+        Long orderId = Long.valueOf(req.getParameter("order_id"));
+        userService.deleteOrder(TEMP_USER_ID, orderId);
 
+        resp.sendRedirect(req.getContextPath() + "/orders");
     }
 }
