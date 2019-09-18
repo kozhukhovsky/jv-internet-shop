@@ -13,7 +13,7 @@ import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.BucketService;
 
 @WebServlet("/bucket")
-public class BucketController extends HttpServlet {
+public class GetAllItemsFromBucketController extends HttpServlet {
     private static final long TEMP_USER_ID = 0L;
 
     @Inject

@@ -12,6 +12,8 @@ import mate.academy.internetshop.service.ItemService;
 
 @WebServlet("/removeItem")
 public class RemoveItemFromBucketController extends HttpServlet {
+    private static final long TEMP_USER_ID = 0L;
+
     @Inject
     private static BucketService bucketService;
     @Inject
@@ -21,7 +23,7 @@ public class RemoveItemFromBucketController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Long itemId = Long.valueOf(req.getParameter("item_id"));
-        bucketService.removeItemFromBucket(0L, itemId);
+        bucketService.removeItemFromBucket(TEMP_USER_ID, itemId);
 
         resp.sendRedirect(req.getContextPath() + "/bucket");
     }
