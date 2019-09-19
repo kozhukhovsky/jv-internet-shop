@@ -15,5 +15,10 @@ public interface UserService {
 
     User deleteByUser(User user);
 
+    List<User> getAll();
+
     List<Order> getOrders(Long userId);
+
+    Order deleteOrder(Long userId, Long orderId);
+
 }
