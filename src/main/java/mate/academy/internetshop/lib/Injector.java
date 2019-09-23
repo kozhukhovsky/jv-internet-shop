@@ -10,8 +10,10 @@ import java.util.List;
 import mate.academy.internetshop.lib.annotation.Dao;
 import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.lib.annotation.Service;
+import org.apache.log4j.Logger;
 
 public class Injector {
+    private static final Logger logger = Logger.getLogger(Injector.class);
     private static final String PROJECT_MAIN_PACKAGE = "mate.academy.internetshop";
     private static List<Class> classes = new ArrayList<>();
 
@@ -19,7 +21,7 @@ public class Injector {
         try {
             classes.addAll(getClasses(PROJECT_MAIN_PACKAGE));
         } catch (ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+            logger.error(e);
         }
     }
 
@@ -70,7 +72,7 @@ public class Injector {
             } else if (file.getName().endsWith(".class")) {
                 classes.add(Class.forName(
                         packageName + '.' + file.getName()
-                            .substring(0, file.getName().length() - 6)));
+                                .substring(0, file.getName().length() - 6)));
             }
         }
         return classes;
