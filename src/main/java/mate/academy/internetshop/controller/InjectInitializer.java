@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 
 @WebListener
 public class InjectInitializer implements ServletContextListener {
-    private final static Logger logger = Logger.getLogger(InjectInitializer.class);
+    private static final Logger logger = Logger.getLogger(InjectInitializer.class);
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
