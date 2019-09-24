@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.service.UserService;
 
-@WebServlet("/deleteUser")
+@WebServlet("/servlet/deleteUser")
 public class DeleteUserController extends HttpServlet {
     @Inject
     private static UserService userService;
@@ -20,6 +20,6 @@ public class DeleteUserController extends HttpServlet {
         Long userId = Long.valueOf(req.getParameter("user_id"));
         userService.deleteById(userId);
 
-        resp.sendRedirect(req.getContextPath() + "/users");
+        resp.sendRedirect(req.getContextPath() + "/servlet/users");
     }
 }

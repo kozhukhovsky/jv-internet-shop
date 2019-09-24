@@ -2,6 +2,7 @@ package mate.academy.internetshop.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import mate.academy.internetshop.lib.IdGenerator;
 
 public class User {
@@ -9,16 +10,13 @@ public class User {
     private String name;
     private String login;
     private String password;
+    private String token;
     private List<Order> orders;
 
     public User() {
         id = IdGenerator.getNextUserId();
         orders = new ArrayList<>();
-    }
-
-    public User(String name) {
-        this();
-        this.name = name;
+        token = UUID.randomUUID().toString();
     }
 
     public Long getId() {
@@ -39,6 +37,10 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getToken() {
+        return token;
     }
 
     public String getPassword() {

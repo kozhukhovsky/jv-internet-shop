@@ -12,21 +12,20 @@ import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.BucketService;
 
-@WebServlet("/bucket")
+@WebServlet("/servlet/bucket")
 public class GetAllItemsFromBucketController extends HttpServlet {
-    private static final long TEMP_USER_ID = 0L;
-
     @Inject
     private static BucketService bucketService;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Bucket bucket = bucketService.get(TEMP_USER_ID);
+        Long userId = (Long) req.getSession(true).getAttribute("userId");
+        Bucket bucket = bucketService.get(userId);
         List<Item> items = bucketService.getAllItems(bucket.getId());
         req.setAttribute("items", items);
         req.setAttribute("bucket_id", bucket.getId());
 
-        req.getRequestDispatcher("WEB-INF/views/bucket.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/bucket.jsp").forward(req, resp);
     }
 }

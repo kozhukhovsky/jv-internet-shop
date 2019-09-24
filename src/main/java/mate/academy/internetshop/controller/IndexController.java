@@ -18,7 +18,7 @@ public class IndexController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         if (userService.getAll().size() > 0) {
-            req.getRequestDispatcher("WEB-INF/views/index.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
         } else {
             resp.sendRedirect(req.getContextPath() + "/registration");
         }

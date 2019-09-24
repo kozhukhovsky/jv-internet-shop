@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.service.ItemService;
 
-@WebServlet("/deleteItem")
+@WebServlet("/servlet/deleteItem")
 public class DeleteItemController extends HttpServlet {
     @Inject
     private static ItemService itemService;
@@ -20,6 +20,6 @@ public class DeleteItemController extends HttpServlet {
         Long itemId = Long.valueOf(req.getParameter("item_id"));
         itemService.deleteById(itemId);
 
-        resp.sendRedirect(req.getContextPath() + "/items");
+        resp.sendRedirect(req.getContextPath() + "/servlet/items");
     }
 }

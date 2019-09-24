@@ -1,7 +1,9 @@
 package mate.academy.internetshop.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import mate.academy.internetshop.dao.UserDao;
+import mate.academy.internetshop.exceptions.AuthenticationException;
 import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.lib.annotation.Service;
 import mate.academy.internetshop.model.Order;
@@ -52,7 +54,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User login(String login, String password) throws AuthenticationException {
+        return userDao.login(login, password);
+    }
+
+    @Override
     public List<User> getAll() {
         return userDao.getAll();
+    }
+
+    @Override
+    public Optional<User> getByToken(String token) {
+        return userDao.getByToken(token);
     }
 }
