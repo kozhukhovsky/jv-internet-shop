@@ -10,7 +10,7 @@ import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.ItemService;
 
-@WebServlet("/additionItems")
+@WebServlet("/servlet/additionItems")
 public class CreateItemController extends HttpServlet {
     @Inject
     private static ItemService itemService;
@@ -18,7 +18,7 @@ public class CreateItemController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        req.getRequestDispatcher("WEB-INF/views/additionItems.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/additionItems.jsp").forward(req, resp);
     }
 
     @Override
@@ -29,6 +29,6 @@ public class CreateItemController extends HttpServlet {
         newItem.setPrice(Double.parseDouble(req.getParameter("item_price")));
         itemService.create(newItem);
 
-        resp.sendRedirect(req.getContextPath() + "/items");
+        resp.sendRedirect(req.getContextPath() + "/servlet/items");
     }
 }

@@ -16,7 +16,7 @@
                 <tr>
                     <td><c:out value="${order.id}"/></td>
                     <td><c:out value="${order.userId}"/></td>
-                    <td><a href="${pageContext.request.contextPath}/deleteOrder?order_id=${order.id}">Delete</a></td>
+                    <td><a href="${pageContext.request.contextPath}/servlet/deleteOrder?order_id=${order.id}">Delete</a></td>
                 </tr>
             </c:forEach>
         </table>

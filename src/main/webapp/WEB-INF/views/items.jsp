@@ -19,12 +19,12 @@
                     <td><c:out value="${item.id}"/></td>
                     <td><c:out value="${item.name}"/></td>
                     <td><c:out value="${item.price}"/></td>
-                    <td><a href="${pageContext.request.contextPath}/deleteItem?item_id=${item.id}">Delete</a></td>
-                    <td><a href="${pageContext.request.contextPath}/addItemToBucket?item_id=${item.id}">Add</a></td>
+                    <td><a href="${pageContext.request.contextPath}/servlet/deleteItem?item_id=${item.id}">Delete</a></td>
+                    <td><a href="${pageContext.request.contextPath}/servlet/addItemToBucket?item_id=${item.id}">Add</a></td>
                 </tr>
             </c:forEach>
         </table>
-        <a href="${pageContext.request.contextPath}/additionItems">Add Item</a>
+        <a href="${pageContext.request.contextPath}/servlet/additionItems">Add Item</a>
         <a href="${pageContext.request.contextPath}/">Back to Index Page</a>
     </body>
 </html>

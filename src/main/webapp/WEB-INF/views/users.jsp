@@ -18,7 +18,7 @@
                 <td><c:out value="${user.id}"/></td>
                 <td><c:out value="${user.login}"/></td>
                 <td><c:out value="${user.name}"/></td>
-                <td><a href="${pageContext.request.contextPath}/deleteUser?user_id=${user.id}">Delete</a></td>
+                <td><a href="${pageContext.request.contextPath}/servlet/deleteUser?user_id=${user.id}">Delete</a></td>
             </tr>
         </c:forEach>
         </table>

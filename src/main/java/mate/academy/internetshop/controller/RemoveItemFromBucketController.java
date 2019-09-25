@@ -7,13 +7,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.annotation.Inject;
+import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.ItemService;
 
-@WebServlet("/removeItem")
+@WebServlet("/servlet/removeItem")
 public class RemoveItemFromBucketController extends HttpServlet {
-    private static final long TEMP_BUCKET_ID = 0L;
-
     @Inject
     private static BucketService bucketService;
     @Inject
@@ -23,8 +22,10 @@ public class RemoveItemFromBucketController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Long itemId = Long.valueOf(req.getParameter("item_id"));
-        bucketService.removeItemFromBucket(TEMP_BUCKET_ID, itemId);
+        Long userId = (Long) req.getSession(true).getAttribute("userId");
+        Bucket bucket = bucketService.get(userId);
+        bucketService.removeItemFromBucket(bucket.getId(), itemId);
 
-        resp.sendRedirect(req.getContextPath() + "/bucket");
+        resp.sendRedirect(req.getContextPath() + "/servlet/bucket");
     }
 }

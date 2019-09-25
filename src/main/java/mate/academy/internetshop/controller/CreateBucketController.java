@@ -10,7 +10,7 @@ import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.service.BucketService;
 
-@WebServlet("/createBucket")
+@WebServlet("/servlet/createBucket")
 public class CreateBucketController extends HttpServlet {
     @Inject
     private static BucketService bucketService;
@@ -18,7 +18,7 @@ public class CreateBucketController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Long userId = Long.valueOf(req.getParameter("user_id"));
+        Long userId = (Long) req.getSession(true).getAttribute("userId");
         Bucket bucket = new Bucket(userId);
         bucketService.create(bucket);
 

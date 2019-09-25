@@ -11,7 +11,7 @@ import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.ItemService;
 
-@WebServlet("/items")
+@WebServlet("/servlet/items")
 public class GetAllItemsController extends HttpServlet {
     @Inject
     private static ItemService itemService;
@@ -22,6 +22,6 @@ public class GetAllItemsController extends HttpServlet {
         List<Item> items = itemService.getAll();
         req.setAttribute("items", items);
 
-        req.getRequestDispatcher("WEB-INF/views/items.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/items.jsp").forward(req, resp);
     }
 }

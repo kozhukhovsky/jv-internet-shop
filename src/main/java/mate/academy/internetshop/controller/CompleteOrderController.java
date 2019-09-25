@@ -11,7 +11,7 @@ import mate.academy.internetshop.model.Bucket;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.OrderService;
 
-@WebServlet("/completeOrder")
+@WebServlet("/servlet/completeOrder")
 public class CompleteOrderController extends HttpServlet {
     @Inject
     private static OrderService orderService;
@@ -21,11 +21,11 @@ public class CompleteOrderController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Long bucketId = Long.valueOf(req.getParameter("bucket_id"));
-        Bucket bucket = bucketService.get(bucketId);
-        orderService.completeOrder(bucket.getItems(), bucket.getUserId());
-        bucketService.clear(bucketId);
+        Long userId = (Long) req.getSession(true).getAttribute("userId");
+        Bucket bucket = bucketService.get(userId);
+        orderService.completeOrder(bucket.getItems(), userId);
+        bucketService.clear(bucket.getId());
 
-        resp.sendRedirect(req.getContextPath() + "/orders");
+        resp.sendRedirect(req.getContextPath() + "/servlet/orders");
     }
 }

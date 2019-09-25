@@ -11,7 +11,7 @@ import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
 
-@WebServlet("/users")
+@WebServlet("/servlet/users")
 public class GetAllUsersController extends HttpServlet {
     @Inject
     private static UserService userService;
@@ -22,6 +22,6 @@ public class GetAllUsersController extends HttpServlet {
         List<User> users = userService.getAll();
         req.setAttribute("users", users);
 
-        req.getRequestDispatcher("WEB-INF/views/users.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req, resp);
     }
 }

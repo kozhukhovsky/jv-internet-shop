@@ -8,14 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.model.Bucket;
-import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.ItemService;
 
-@WebServlet("/addItemToBucket")
+@WebServlet("/servlet/addItemToBucket")
 public class AddItemToBucketController extends HttpServlet {
-    private static final long TEMP_USER_ID = 0L;
-
     @Inject
     private static BucketService bucketService;
 
@@ -25,11 +22,11 @@ public class AddItemToBucketController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        Bucket bucket = bucketService.get(TEMP_USER_ID);
+        Long userId = (Long) req.getSession(true).getAttribute("userId");
         Long itemId = Long.valueOf(req.getParameter("item_id"));
-        Item item = itemService.get(itemId);
-        bucket.getItems().add(item);
+        Bucket bucket = bucketService.get(userId);
+        bucketService.addItem(bucket.getId(), itemId);
 
-        resp.sendRedirect(req.getContextPath() + "/items");
+        resp.sendRedirect(req.getContextPath() + "/servlet/items");
     }
 }
