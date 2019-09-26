@@ -10,7 +10,7 @@ import mate.academy.internetshop.lib.annotation.Inject;
 import mate.academy.internetshop.model.Item;
 import mate.academy.internetshop.service.ItemService;
 
-@WebServlet("/servlet/additionItems")
+@WebServlet("/servlet/createItem")
 public class CreateItemController extends HttpServlet {
     @Inject
     private static ItemService itemService;

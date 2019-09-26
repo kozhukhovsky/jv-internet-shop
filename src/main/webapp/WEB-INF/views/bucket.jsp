@@ -19,7 +19,7 @@
                     <td><c:out value="${item.id}"/></td>
                     <td><c:out value="${item.name}"/></td>
                     <td><c:out value="${item.price}"/></td>
-                    <td><a href="${pageContext.request.contextPath}/servlet/removeItem?item_id=${item.id}">Remove</a>
+                    <td><a href="${pageContext.request.contextPath}/servlet/removeItemFromBucket?item_id=${item.id}">Remove</a>
                     </td>
                 </tr>
             </c:forEach>

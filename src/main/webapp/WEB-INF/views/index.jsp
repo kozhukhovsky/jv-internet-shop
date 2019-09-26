@@ -10,5 +10,6 @@
         <a href="${pageContext.request.contextPath}/servlet/items">List of Items</a><br>
         <a href="${pageContext.request.contextPath}/servlet/orders">List of Orders</a><br>
         <a href="${pageContext.request.contextPath}/servlet/bucket">Bucket</a><br>
+        <a href="${pageContext.request.contextPath}/logout">Logout</a><br>
     </body>
 </html>

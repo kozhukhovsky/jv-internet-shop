@@ -36,7 +36,7 @@ public class LoginController extends HttpServlet {
             User user = userService.login(login, password);
             HttpSession session = req.getSession(true);
             session.setAttribute("userId", user.getId());
-            Cookie cookie = new Cookie("Mate", user.getToken());
+            Cookie cookie = new Cookie("MATE", user.getToken());
             resp.addCookie(cookie);
             resp.sendRedirect(req.getContextPath() + "/index");
         } catch (AuthenticationException e) {

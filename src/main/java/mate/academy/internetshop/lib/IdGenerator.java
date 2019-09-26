@@ -5,6 +5,7 @@ public class IdGenerator {
     private static long nextItemId;
     private static long nextOrderId;
     private static long nextUserId;
+    private static long nextRoleId;
 
     private IdGenerator() {
     }
@@ -23,5 +24,9 @@ public class IdGenerator {
 
     public static long getNextUserId() {
         return nextUserId++;
+    }
+
+    public static long getNextRoleId() {
+        return nextRoleId;
     }
 }
