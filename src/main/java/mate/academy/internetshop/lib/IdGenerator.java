@@ -27,6 +27,6 @@ public class IdGenerator {
     }
 
     public static long getNextRoleId() {
-        return nextRoleId;
+        return nextRoleId++;
     }
 }
