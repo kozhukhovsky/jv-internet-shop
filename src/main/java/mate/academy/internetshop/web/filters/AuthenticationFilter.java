@@ -17,7 +17,7 @@ import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
 import org.apache.log4j.Logger;
 
-@WebFilter("/servlet/*")
+@WebFilter(filterName = "authenticationFilter")
 public class AuthenticationFilter implements Filter {
     private static Logger logger = Logger.getLogger(AuthenticationFilter.class);
 

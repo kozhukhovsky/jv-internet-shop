@@ -20,7 +20,7 @@ public class IndexController extends HttpServlet {
         if (userService.getAll().size() > 0) {
             req.getRequestDispatcher("/WEB-INF/views/index.jsp").forward(req, resp);
         } else {
-            resp.sendRedirect(req.getContextPath() + "/registration");
+            resp.sendRedirect(req.getContextPath() + "/inject");
         }
 
     }

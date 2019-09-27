@@ -24,7 +24,7 @@
                 </tr>
             </c:forEach>
         </table>
-        <a href="${pageContext.request.contextPath}/servlet/additionItems">Add Item</a>
+        <a href="${pageContext.request.contextPath}/servlet/createItem">Add Item</a>
         <a href="${pageContext.request.contextPath}/">Back to Index Page</a>
     </body>
 </html>
