@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import mate.academy.internetshop.dao.ItemDao;
 import mate.academy.internetshop.lib.annotation.Dao;
 import mate.academy.internetshop.model.Item;
@@ -29,35 +28,22 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
 
     @Override
     public Item create(Item item) {
-        PreparedStatement statement = null;
-
-        try {
-            statement = connection
-                    .prepareStatement(SQL_INSERT_ITEM, Statement.RETURN_GENERATED_KEYS);
+        try (PreparedStatement statement = connection
+                .prepareStatement(SQL_INSERT_ITEM, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, item.getName());
             statement.setDouble(2, item.getPrice());
             statement.executeUpdate();
-        } catch (SQLException e) {
-            logger.warn("Can't create item id=" + item.getId());
-        }
-
-        try {
-            ResultSet generatedKeys = Objects.requireNonNull(statement).getGeneratedKeys();
+            ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                Long itemId = generatedKeys.getLong("item_id");
+                Long itemId = generatedKeys.getLong(1);
                 item.setId(itemId);
             } else {
                 throw new SQLException("Creating user failed, no ID obtained.");
             }
         } catch (SQLException e) {
-            logger.warn("Creating user failed, no ID obtained.");
-        } finally {
-            try {
-                Objects.requireNonNull(statement).close();
-            } catch (SQLException e) {
-                logger.error("Can't close statement", e);
-            }
+            logger.warn("Can't create item id=" + item.getId());
         }
+
         return item;
     }
 
