@@ -93,7 +93,9 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     public Item deleteById(Long id) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_DELETE_ITEM)) {
             statement.setLong(1, id);
+            Item deletedItem = get(id);
             statement.executeUpdate();
+            return deletedItem;
         } catch (SQLException e) {
             logger.warn("Can't delete item by id=" + id);
         }
