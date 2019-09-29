@@ -18,7 +18,8 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
     private static final String SQL_INSERT_ITEM = "INSERT INTO item (name, price) VALUES (?, ?);";
     private static final String SQL_GET_ITEM = "SELECT * FROM item WHERE item_id=?;";
-    private static final String SQL_UPDATE_ITEM = "UPDATE item SET name=?, price=? WHERE item_id=?;";
+    private static final String SQL_UPDATE_ITEM = "UPDATE item SET name=?, price=? "
+            + "WHERE item_id=?;";
     private static final String SQL_DELETE_ITEM = "DELETE FROM item WHERE item_id=?;";
     private static final String SQL_GET_ALL_ITEMS = "SELECT * FROM item;";
 
