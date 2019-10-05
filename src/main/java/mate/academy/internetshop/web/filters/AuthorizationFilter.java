@@ -1,8 +1,5 @@
 package mate.academy.internetshop.web.filters;
 
-import static mate.academy.internetshop.model.Role.RoleName.ADMIN;
-import static mate.academy.internetshop.model.Role.RoleName.USER;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +15,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.annotation.Inject;
-import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.UserService;
 
@@ -27,18 +23,19 @@ public class AuthorizationFilter implements Filter {
     @Inject
     private static UserService userService;
 
-    private Map<String, Role.RoleName> protectedUrls = new HashMap<>();
+    private Map<String, String> protectedUrls = new HashMap<>();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        protectedUrls.put("/servlet/users", ADMIN);
-        protectedUrls.put("/servlet/createItem", ADMIN);
-        protectedUrls.put("/servlet/deleteItem", ADMIN);
-        protectedUrls.put("/servlet/bucket", USER);
-        protectedUrls.put("/servlet/addItemToBucket", USER);
-        protectedUrls.put("/servlet/removeItemFromBucket", USER);
-        protectedUrls.put("/servlet/completeOrder", USER);
-        protectedUrls.put("/servlet/orders", USER);
+        protectedUrls.put("/servlet/users", "ADMIN");
+        protectedUrls.put("/servlet/createItem", "ADMIN");
+        protectedUrls.put("/servlet/deleteItem", "ADMIN");
+        protectedUrls.put("/servlet/bucket", "USER");
+        protectedUrls.put("/servlet/addItemToBucket", "USER");
+        protectedUrls.put("/servlet/removeItemFromBucket", "USER");
+        protectedUrls.put("/servlet/completeOrder", "USER");
+        protectedUrls.put("/servlet/orders", "USER");
+        protectedUrls.put("/servlet/createBucket", "USER");
     }
 
     @Override
@@ -54,7 +51,7 @@ public class AuthorizationFilter implements Filter {
         }
 
         String requestedUrl = req.getRequestURI().replace(req.getContextPath(), "");
-        Role.RoleName roleName = protectedUrls.get(requestedUrl);
+        String roleName = protectedUrls.get(requestedUrl);
         if (roleName == null) {
             processAuthenticated(filterChain, req, resp);
         }
@@ -88,8 +85,8 @@ public class AuthorizationFilter implements Filter {
 
     }
 
-    private boolean verifyRole(User user, Role.RoleName roleName) {
-        return user.getRoles().stream().anyMatch(r -> r.getRoleName().equals(roleName));
+    private boolean verifyRole(User user, String roleName) {
+        return user.getRoles().stream().anyMatch(r -> r.getName().equals(roleName));
     }
 
     private void processDenied(HttpServletRequest req, HttpServletResponse resp)

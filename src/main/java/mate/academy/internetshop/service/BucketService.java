@@ -13,13 +13,11 @@ public interface BucketService {
 
     Bucket deleteById(Long id);
 
-    Bucket deleteByBucket(Bucket bucket);
-
     Bucket addItem(Long bucketId, Long itemId);
 
     Bucket clear(Long bucketId);
 
     List<Item> getAllItems(Long bucketId);
 
-    Item removeItemFromBucket(Long bucketId, Long itemId);
+    Bucket removeItemFromBucket(Long bucketId, Long itemId);
 }
