@@ -14,7 +14,5 @@ public interface OrderService {
 
     Order completeOrder(List items, Long userId);
 
-    List<Order> getOrders(Long userId);
-
-    Order deleteOrder(Long userId, Long orderId);
+    List<Order> getOrdersByUserId(Long userId);
 }

@@ -37,19 +37,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Order> getOrders(Long userId) {
-        return userDao.get(userId).getOrders();
-    }
-
-    @Override
-    public Order deleteOrder(Long userId, Long orderId) {
-        List<Order> orders = userDao.get(userId).getOrders();
-        Order deletedOrder = orders.get(orderId.intValue());
-        orders.remove(deletedOrder);
-        return deletedOrder;
-    }
-
-    @Override
     public User login(String login, String password) throws AuthenticationException {
         return userDao.login(login, password);
     }

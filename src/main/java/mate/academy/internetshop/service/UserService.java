@@ -18,10 +18,6 @@ public interface UserService {
 
     List<User> getAll();
 
-    List<Order> getOrders(Long userId);
-
-    Order deleteOrder(Long userId, Long orderId);
-
     User login(String login, String password) throws AuthenticationException;
 
     Optional<User> getByToken(String token);

@@ -19,7 +19,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
 
     private static final String SQL_INSERT_BUCKET = "INSERT INTO bucket (user_id) VALUES (?)";
     private static final String SQL_GET_BY_ID = "SELECT * FROM bucket WHERE id=?";
-    private static final String SQL_UPDATE_BUCKET = "UPDATE bucket SET user_id=?";
+    private static final String SQL_UPDATE_BUCKET = "UPDATE bucket SET user_id=? WHERE id=?";
     private static final String SQL_GET_ITEMS_BY_BUCKET_ID = "SELECT i.id, i.name, i.price "
             + "FROM item i INNER JOIN bucket_item bi ON i.id = bi.item_id WHERE bucket_id=?";
     private static final String SQL_DELETE_BUCKET = "DELETE FROM bucket WHERE id=?";
@@ -77,6 +77,7 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
     public Bucket update(Bucket bucket) {
         try (PreparedStatement statement = connection.prepareStatement(SQL_UPDATE_BUCKET)) {
             statement.setLong(1, bucket.getUserId());
+            statement.setLong(2, bucket.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             logger.error("Can't update bucket id=" + bucket.getId(), e);

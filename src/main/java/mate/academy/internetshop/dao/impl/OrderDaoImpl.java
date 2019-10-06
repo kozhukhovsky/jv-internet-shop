@@ -18,10 +18,10 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Order get(Long id) {
         return Storage.orders
-            .stream()
-            .filter(order -> order.getId().equals(id))
-            .findFirst()
-            .orElseThrow(() -> new NoSuchElementException("Can't find order with id " + id));
+                .stream()
+                .filter(order -> order.getId().equals(id))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Can't find order with id " + id));
     }
 
     @Override
@@ -43,12 +43,8 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getOrders(Long userId) {
+    public List<Order> getOrdersByUserId(Long userId) {
         return null;
     }
 
-    @Override
-    public Order deleteOrder(Long userId, Long orderId) {
-        return null;
-    }
 }

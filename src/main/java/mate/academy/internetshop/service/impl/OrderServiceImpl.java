@@ -40,17 +40,11 @@ public class OrderServiceImpl implements OrderService {
     public Order completeOrder(List items, Long userId) {
         Order order = new Order(new ArrayList<>(items), userId);
         orderDao.create(order);
-        userDao.get(userId).getOrders().add(order);
         return order;
     }
 
     @Override
-    public List<Order> getOrders(Long userId) {
-        return null;
-    }
-
-    @Override
-    public Order deleteOrder(Long userId, Long orderId) {
-        return null;
+    public List<Order> getOrdersByUserId(Long userId) {
+        return orderDao.getOrdersByUserId(userId);
     }
 }

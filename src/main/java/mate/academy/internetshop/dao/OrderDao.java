@@ -12,7 +12,5 @@ public interface OrderDao {
 
     Order deleteById(Long id);
 
-    List<Order> getOrders(Long userId);
-
-    Order deleteOrder(Long userId, Long orderId);
+    List<Order> getOrdersByUserId(Long userId);
 }
