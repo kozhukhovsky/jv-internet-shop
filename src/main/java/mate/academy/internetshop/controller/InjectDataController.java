@@ -30,8 +30,6 @@ public class InjectDataController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         Role userRole = roleService.getByName("USER");
-        Role adminRole = roleService.getByName("ADMIN");
-
         User user = new User();
         user.setName("Jack");
         user.setLogin("user");
@@ -45,6 +43,7 @@ public class InjectDataController extends HttpServlet {
         Bucket usersBucket = new Bucket(user.getId());
         bucketService.create(usersBucket);
 
+        Role adminRole = roleService.getByName("ADMIN");
         User admin = new User();
         admin.setName("Mark");
         admin.setLogin("admin");

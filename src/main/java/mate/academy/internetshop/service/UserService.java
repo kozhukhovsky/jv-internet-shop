@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import mate.academy.internetshop.exceptions.AuthenticationException;
 import mate.academy.internetshop.exceptions.RegistrationException;
-import mate.academy.internetshop.model.Order;
 import mate.academy.internetshop.model.User;
 
 public interface UserService {

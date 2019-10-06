@@ -1,7 +1,6 @@
 package mate.academy.internetshop.model;
 
 import java.util.List;
-import mate.academy.internetshop.lib.IdGenerator;
 
 public class Order {
     private Long id;

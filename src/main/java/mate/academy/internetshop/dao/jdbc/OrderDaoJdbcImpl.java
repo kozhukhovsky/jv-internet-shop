@@ -26,7 +26,6 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
     private static final String SQL_DELETE_ORDER = "DELETE FROM `order` WHERE id=?";
     private static final String SQL_GET_ALL_ORDERS = "SELECT * FROM `order` WHERE user_id=?";
 
-
     public OrderDaoJdbcImpl(Connection connection) {
         super(connection);
     }
