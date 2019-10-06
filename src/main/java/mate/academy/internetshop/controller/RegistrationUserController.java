@@ -14,6 +14,7 @@ import mate.academy.internetshop.model.Role;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.RoleService;
 import mate.academy.internetshop.service.UserService;
+import mate.academy.internetshop.util.HashUtil;
 import org.apache.log4j.Logger;
 
 @WebServlet("/registration")
@@ -37,7 +38,10 @@ public class RegistrationUserController extends HttpServlet {
         User user = new User();
         user.setName(req.getParameter("user_name"));
         user.setLogin(req.getParameter("user_login"));
-        user.setPassword(req.getParameter("user_password"));
+        byte[] salt = HashUtil.getSalt();
+        user.setSalt(salt);
+        String hashedPassword = HashUtil.hashPassword(req.getParameter("user_password"), salt);
+        user.setPassword(hashedPassword);
         Role role = roleService.getByName("USER");
         user.addRole(role);
         try {

@@ -14,6 +14,7 @@ import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.RoleService;
 import mate.academy.internetshop.service.UserService;
+import mate.academy.internetshop.util.HashUtil;
 
 @WebServlet("/inject")
 public class InjectDataController extends HttpServlet {
@@ -33,7 +34,10 @@ public class InjectDataController extends HttpServlet {
         User user = new User();
         user.setName("Jack");
         user.setLogin("user");
-        user.setPassword("123");
+        byte[] saltForUser = HashUtil.getSalt();
+        user.setSalt(saltForUser);
+        String userPassword = HashUtil.hashPassword("123", saltForUser);
+        user.setPassword(userPassword);
         user.addRole(userRole);
         try {
             userService.create(user);
@@ -47,7 +51,10 @@ public class InjectDataController extends HttpServlet {
         User admin = new User();
         admin.setName("Mark");
         admin.setLogin("admin");
-        admin.setPassword("123");
+        byte[] saltForAdmin = HashUtil.getSalt();
+        admin.setSalt(saltForAdmin);
+        String adminPassword = HashUtil.hashPassword("123", saltForAdmin);
+        admin.setPassword(adminPassword);
         admin.addRole(adminRole);
         try {
             userService.create(admin);

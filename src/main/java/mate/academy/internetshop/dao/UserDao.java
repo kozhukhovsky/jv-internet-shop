@@ -20,4 +20,6 @@ public interface UserDao {
     User login(String login, String password) throws AuthenticationException;
 
     Optional<User> getByToken(String token);
+
+    User getByLogin(String login);
 }
