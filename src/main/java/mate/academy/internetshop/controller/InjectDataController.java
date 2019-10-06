@@ -14,7 +14,6 @@ import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.BucketService;
 import mate.academy.internetshop.service.RoleService;
 import mate.academy.internetshop.service.UserService;
-import mate.academy.internetshop.util.HashUtil;
 
 @WebServlet("/inject")
 public class InjectDataController extends HttpServlet {
