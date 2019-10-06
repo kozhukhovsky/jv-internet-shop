@@ -34,10 +34,7 @@ public class InjectDataController extends HttpServlet {
         User user = new User();
         user.setName("Jack");
         user.setLogin("user");
-        byte[] saltForUser = HashUtil.getSalt();
-        user.setSalt(saltForUser);
-        String userPassword = HashUtil.hashPassword("123", saltForUser);
-        user.setPassword(userPassword);
+        user.setPassword("123");
         user.addRole(userRole);
         try {
             userService.create(user);
@@ -51,10 +48,7 @@ public class InjectDataController extends HttpServlet {
         User admin = new User();
         admin.setName("Mark");
         admin.setLogin("admin");
-        byte[] saltForAdmin = HashUtil.getSalt();
-        admin.setSalt(saltForAdmin);
-        String adminPassword = HashUtil.hashPassword("123", saltForAdmin);
-        admin.setPassword(adminPassword);
+        admin.setPassword("123");
         admin.addRole(adminRole);
         try {
             userService.create(admin);

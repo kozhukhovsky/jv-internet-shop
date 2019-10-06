@@ -18,6 +18,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) throws RegistrationException {
+        String password = user.getPassword();
+        byte[] salt = HashUtil.getSalt();
+        String hashedPassword = HashUtil.hashPassword(password, salt);
+        user.setSalt(salt);
+        user.setPassword(hashedPassword);
         return userDao.create(user);
     }
 

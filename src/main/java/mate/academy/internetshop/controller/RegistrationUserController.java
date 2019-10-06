@@ -38,10 +38,7 @@ public class RegistrationUserController extends HttpServlet {
         User user = new User();
         user.setName(req.getParameter("user_name"));
         user.setLogin(req.getParameter("user_login"));
-        byte[] salt = HashUtil.getSalt();
-        user.setSalt(salt);
-        String hashedPassword = HashUtil.hashPassword(req.getParameter("user_password"), salt);
-        user.setPassword(hashedPassword);
+        user.setPassword(req.getParameter("user_password"));
         Role role = roleService.getByName("USER");
         user.addRole(role);
         try {
