@@ -21,19 +21,21 @@ import org.apache.log4j.Logger;
 public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
     private static Logger logger = Logger.getLogger(UserDaoJdbcImpl.class);
 
-    private static final String SQL_INSERT_USER = "INSERT INTO user (name, login, password, token) "
-            + "VALUES (?, ?, ?, ?)";
+    private static final String SQL_INSERT_USER =
+            "INSERT INTO user (name, login, password, token, salt) "
+                    + "VALUES (?, ?, ?, ?, ?)";
     private static final String SQL_INSERT_ROLE_TO_USER = "INSERT INTO user_role VALUES(?, ?)";
     private static final String SQL_GET_USER_BY_ID = "SELECT * FROM user WHERE id=?";
     private static final String SQL_GET_ROLES_BY_USER_ID = "SELECT r.id, r.name FROM role r "
             + "INNER JOIN user_role ur ON r.id = ur.role_id WHERE user_id=?";
-    private static final String SQL_UPDATE_USER = "UPDATE user SET name=?, login=?, password=? "
+    private static final String SQL_UPDATE_USER = "UPDATE user SET name=?, login=?, password=?"
             + "WHERE id=?";
     private static final String SQL_DELETE_USER = "DELETE FROM user WHERE id=?";
     private static final String SQL_GET_ALL_USERS = "SELECT * FROM user";
     private static final String SQL_GET_USER_BY_LOGIN_AND_PASSWORD = "SELECT * FROM user "
             + "WHERE login=? AND password=?";
     private static final String SQL_GET_USER_BY_TOKEN = "SELECT * FROM user WHERE token=?";
+    private static final String SQL_GET_USER_BY_LOGIN = "SELECT * FROM user WHERE login=?";
 
     public UserDaoJdbcImpl(Connection connection) {
         super(connection);
@@ -47,6 +49,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             statement.setString(2, user.getLogin());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getToken());
+            statement.setBytes(5, user.getSalt());
             statement.executeUpdate();
 
             ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -100,12 +103,14 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
         String login = resultSet.getString("login");
         String password = resultSet.getString("password");
         String token = resultSet.getString("token");
+        byte[] salt = resultSet.getBytes("salt");
         Set<Role> roles = getRolesByUserId(userId);
         user.setId(userId);
         user.setName(name);
         user.setLogin(login);
         user.setPassword(password);
         user.setToken(token);
+        user.setSalt(salt);
         user.setRoles(roles);
         return user;
     }
@@ -201,5 +206,19 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             logger.error("Can't get user by token");
         }
         return Optional.ofNullable(user);
+    }
+
+    @Override
+    public User getByLogin(String login) {
+        try (PreparedStatement statement = connection.prepareStatement(SQL_GET_USER_BY_LOGIN)) {
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return getUser(resultSet);
+            }
+        } catch (SQLException e) {
+            logger.error("Can't find user by login");
+        }
+        return null;
     }
 }

@@ -80,3 +80,7 @@ CREATE TABLE order_item
     FOREIGN KEY (order_id) REFERENCES `order` (id) ON DELETE CASCADE,
     FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE
 );
+
+ALTER TABLE user
+    ADD COLUMN salt BINARY(16);
+
