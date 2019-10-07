@@ -20,7 +20,7 @@ public class HibernateUtil {
             throw new RuntimeException(e);
         }
     }
-    
+
     public static SessionFactory sessionFactory() {
         return sessionFactory;
     }
