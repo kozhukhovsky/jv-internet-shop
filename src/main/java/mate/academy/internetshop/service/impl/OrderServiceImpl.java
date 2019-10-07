@@ -37,15 +37,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order deleteByOrder(Order order) {
-        return orderDao.deleteByOrder(order);
-    }
-
-    @Override
     public Order completeOrder(List items, Long userId) {
         Order order = new Order(new ArrayList<>(items), userId);
         orderDao.create(order);
-        userDao.get(userId).getOrders().add(order);
         return order;
+    }
+
+    @Override
+    public List<Order> getOrdersByUserId(Long userId) {
+        return orderDao.getOrdersByUserId(userId);
     }
 }

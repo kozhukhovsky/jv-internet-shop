@@ -12,7 +12,7 @@ public interface OrderService {
 
     Order deleteById(Long id);
 
-    Order deleteByOrder(Order order);
-
     Order completeOrder(List items, Long userId);
+
+    List<Order> getOrdersByUserId(Long userId);
 }

@@ -3,11 +3,11 @@ package mate.academy.internetshop.service;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.internetshop.exceptions.AuthenticationException;
-import mate.academy.internetshop.model.Order;
+import mate.academy.internetshop.exceptions.RegistrationException;
 import mate.academy.internetshop.model.User;
 
 public interface UserService {
-    User create(User user);
+    User create(User user) throws RegistrationException;
 
     User get(Long id);
 
@@ -15,13 +15,7 @@ public interface UserService {
 
     User deleteById(Long id);
 
-    User deleteByUser(User user);
-
     List<User> getAll();
-
-    List<Order> getOrders(Long userId);
-
-    Order deleteOrder(Long userId, Long orderId);
 
     User login(String login, String password) throws AuthenticationException;
 

@@ -3,10 +3,11 @@ package mate.academy.internetshop.dao;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.internetshop.exceptions.AuthenticationException;
+import mate.academy.internetshop.exceptions.RegistrationException;
 import mate.academy.internetshop.model.User;
 
 public interface UserDao {
-    User create(User user);
+    User create(User user) throws RegistrationException;
 
     User get(Long id);
 
@@ -14,11 +15,11 @@ public interface UserDao {
 
     User deleteById(Long id);
 
-    User deleteByUser(User user);
-
     List<User> getAll();
 
     User login(String login, String password) throws AuthenticationException;
 
     Optional<User> getByToken(String token);
+
+    User getByLogin(String login);
 }

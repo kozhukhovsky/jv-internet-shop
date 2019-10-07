@@ -15,12 +15,13 @@ import org.apache.log4j.Logger;
 @Dao
 public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
     private static Logger logger = Logger.getLogger(ItemDaoJdbcImpl.class);
-    private static final String SQL_INSERT_ITEM = "INSERT INTO item (name, price) VALUES (?, ?);";
-    private static final String SQL_GET_ITEM = "SELECT * FROM item WHERE item_id=?;";
+
+    private static final String SQL_INSERT_ITEM = "INSERT INTO item (name, price) VALUES (?, ?)";
+    private static final String SQL_GET_ITEM = "SELECT * FROM item WHERE id=?";
     private static final String SQL_UPDATE_ITEM = "UPDATE item SET name=?, price=? "
-            + "WHERE item_id=?;";
-    private static final String SQL_DELETE_ITEM = "DELETE FROM item WHERE item_id=?;";
-    private static final String SQL_GET_ALL_ITEMS = "SELECT * FROM item;";
+            + "WHERE id=?";
+    private static final String SQL_DELETE_ITEM = "DELETE FROM item WHERE id=?";
+    private static final String SQL_GET_ALL_ITEMS = "SELECT * FROM item";
 
     public ItemDaoJdbcImpl(Connection connection) {
         super(connection);
@@ -41,7 +42,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
                 throw new SQLException("Creating user failed, no ID obtained.");
             }
         } catch (SQLException e) {
-            logger.warn("Can't create item id=" + item.getId());
+            logger.error("Can't create item id=" + item.getId(), e);
         }
 
         return item;
@@ -56,7 +57,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
                 return getItem(resultSet);
             }
         } catch (SQLException e) {
-            logger.warn("Can't get item by id=" + id);
+            logger.error("Can't get item by id=" + id, e);
         }
 
         return null;
@@ -70,7 +71,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
             statement.setLong(3, item.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.warn("Can't update item" + item.getId());
+            logger.error("Can't update item" + item.getId(), e);
         }
         return item;
     }
@@ -83,7 +84,7 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
             statement.executeUpdate();
             return deletedItem;
         } catch (SQLException e) {
-            logger.warn("Can't delete item by id=" + id);
+            logger.error("Can't delete item by id=" + id, e);
         }
         return null;
     }
@@ -97,13 +98,13 @@ public class ItemDaoJdbcImpl extends AbstractDao<Item> implements ItemDao {
                 items.add(getItem(resultSet));
             }
         } catch (SQLException e) {
-            logger.warn("Can't get items");
+            logger.error("Can't get items", e);
         }
         return items;
     }
 
     private Item getItem(ResultSet resultSet) throws SQLException {
-        Long itemId = resultSet.getLong("item_id");
+        Long itemId = resultSet.getLong("id");
         String name = resultSet.getString("name");
         Double price = resultSet.getDouble("price");
         Item item = new Item();

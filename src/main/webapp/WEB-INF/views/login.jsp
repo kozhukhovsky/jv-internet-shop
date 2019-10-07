@@ -11,5 +11,6 @@
                              name="user_password" required><br>
             <button type="submit">Login</button>
         </form>
+        <a href="${pageContext.request.contextPath}/">Back to Index Page</a>
     </body>
 </html>

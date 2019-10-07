@@ -6,13 +6,14 @@ import java.util.Optional;
 import mate.academy.internetshop.dao.UserDao;
 import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.exceptions.AuthenticationException;
+import mate.academy.internetshop.exceptions.RegistrationException;
 import mate.academy.internetshop.lib.annotation.Dao;
 import mate.academy.internetshop.model.User;
 
 @Dao
 public class UserDaoImpl implements UserDao {
     @Override
-    public User create(User user) {
+    public User create(User user) throws RegistrationException {
         Storage.users.add(user);
         return user;
     }
@@ -45,12 +46,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User deleteByUser(User user) {
-        Storage.users.removeIf(sourceUser -> sourceUser.getId().equals(user.getId()));
-        return user;
-    }
-
-    @Override
     public List<User> getAll() {
         return Storage.users;
     }
@@ -71,5 +66,10 @@ public class UserDaoImpl implements UserDao {
         return Storage.users.stream()
                 .filter(u -> u.getToken().equals(token))
                 .findFirst();
+    }
+
+    @Override
+    public User getByLogin(String login) {
+        return null;
     }
 }
