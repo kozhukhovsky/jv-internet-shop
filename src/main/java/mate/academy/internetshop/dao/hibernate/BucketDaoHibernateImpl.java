@@ -36,7 +36,6 @@ public class BucketDaoHibernateImpl implements BucketDao {
     public Bucket get(Long id) {
         try (Session session = HibernateUtil.sessionFactory().openSession()) {
             Bucket bucket = session.get(Bucket.class, id);
-            //Hibernate.initialize(bucket.getUser());
             return bucket;
         } catch (Exception e) {
             logger.error("Can't get bucket by id=" + id);
