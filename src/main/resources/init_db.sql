@@ -1,5 +1,6 @@
+DROP DATABASE jv_internet_shop;
 CREATE DATABASE jv_internet_shop;
-
+use jv_internet_shop;
 CREATE TABLE item
 (
     id    BIGINT PRIMARY KEY AUTO_INCREMENT,
