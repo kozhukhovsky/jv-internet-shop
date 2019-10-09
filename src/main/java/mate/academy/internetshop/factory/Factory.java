@@ -10,6 +10,7 @@ import mate.academy.internetshop.dao.RoleDao;
 import mate.academy.internetshop.dao.UserDao;
 import mate.academy.internetshop.dao.hibernate.BucketDaoHibernateImpl;
 import mate.academy.internetshop.dao.hibernate.ItemDaoHibernateImpl;
+import mate.academy.internetshop.dao.hibernate.RoleDaoHibernateImpl;
 import mate.academy.internetshop.dao.hibernate.UserDaoHibernateImpl;
 import mate.academy.internetshop.dao.jdbc.OrderDaoJdbcImpl;
 import mate.academy.internetshop.dao.jdbc.RoleDaoJdbcImpl;
@@ -82,7 +83,7 @@ public class Factory {
 
     public static RoleDao getRoleDao() {
         if (roleDao == null) {
-            roleDao = new RoleDaoJdbcImpl(connection);
+            roleDao = new RoleDaoHibernateImpl();
         }
         return roleDao;
     }
