@@ -21,5 +21,5 @@ public interface UserDao {
 
     Optional<User> getByToken(String token);
 
-    User getByLogin(String login);
+    User getByLogin(String login) throws AuthenticationException;
 }
