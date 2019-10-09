@@ -38,17 +38,48 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public User get(Long id) {
+        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+            User user = session.get(User.class, id);
+            Hibernate.initialize(user.getRoles());
+            return user;
+        } catch (Exception e) {
+            logger.error("Can't get user by id=" + id);
+        }
         return null;
     }
 
     @Override
     public User update(User user) {
-        return null;
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.update(user);
+            transaction.commit();
+        } catch (Exception e) {
+            logger.error("Can't update user id=" + user.getId(), e);
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        return user;
     }
 
     @Override
     public User deleteById(Long id) {
-        return null;
+        User user = null;
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            user = get(id);
+            session.delete(user);
+            transaction.commit();
+        } catch (Exception e) {
+            logger.error("Can't delete user id=" + id);
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        return user;
     }
 
     @Override
@@ -96,9 +127,7 @@ public class UserDaoHibernateImpl implements UserDao {
         try (Session session = HibernateUtil.sessionFactory().openSession()) {
             Query query = session.createQuery("from User where login=:login");
             query.setParameter("login", login);
-            User user = (User) query.getSingleResult();
-            Hibernate.initialize(user.getRoles());
-            return user;
+            return (User) query.getSingleResult();
         } catch (Exception e) {
             logger.error("Can't get user by login", e);
         }

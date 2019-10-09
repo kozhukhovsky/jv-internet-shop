@@ -1,0 +1,86 @@
+package mate.academy.internetshop.dao.hibernate;
+
+import java.util.List;
+import mate.academy.internetshop.dao.BucketDao;
+import mate.academy.internetshop.lib.annotation.Dao;
+import mate.academy.internetshop.model.Bucket;
+import mate.academy.internetshop.model.Item;
+import mate.academy.internetshop.util.HibernateUtil;
+import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+@Dao
+public class BucketDaoHibernateImpl implements BucketDao {
+    private static Logger logger = Logger.getLogger(BucketDaoHibernateImpl.class);
+
+    @Override
+    public Bucket create(Bucket bucket) {
+        Transaction transaction = null;
+        Long bucketId = null;
+        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            bucketId = (Long) session.save(bucket);
+            transaction.commit();
+        } catch (Exception e) {
+            logger.error("Can't create bucket", e);
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        bucket.setId(bucketId);
+        return bucket;
+    }
+
+    @Override
+    public Bucket get(Long id) {
+        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+            Bucket bucket = session.get(Bucket.class, id);
+            //Hibernate.initialize(bucket.getUser());
+            return bucket;
+        } catch (Exception e) {
+            logger.error("Can't get bucket by id=" + id);
+        }
+        return null;
+    }
+
+    @Override
+    public Bucket update(Bucket bucket) {
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            session.update(bucket);
+            transaction.commit();
+        } catch (Exception e) {
+            logger.error("Can't update bucket id=" + bucket.getId(), e);
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        return bucket;
+    }
+
+    @Override
+    public Bucket deleteById(Long id) {
+        Bucket bucket = null;
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            bucket = get(id);
+            session.delete(bucket);
+            transaction.commit();
+        } catch (Exception e) {
+            logger.error("Can't delete bucket id=" + id);
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
+        return bucket;
+    }
+
+    @Override
+    public List<Item> getAllItems(Long bucketId) {
+        Bucket bucket = get(bucketId);
+        return bucket.getItems();
+    }
+}

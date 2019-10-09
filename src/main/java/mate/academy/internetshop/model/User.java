@@ -1,11 +1,12 @@
 package mate.academy.internetshop.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -109,5 +110,31 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return id.equals(user.id)
+                && name.equals(user.name)
+                && login.equals(user.login)
+                && password.equals(user.password)
+                && Arrays.equals(salt, user.salt)
+                && token.equals(user.token)
+                && orders.equals(user.orders)
+                && roles.equals(user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, name, login, password, token, orders, roles);
+        result = 31 * result + Arrays.hashCode(salt);
+        return result;
     }
 }

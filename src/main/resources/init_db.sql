@@ -1,4 +1,4 @@
-DROP DATABASE jv_internet_shop;
+DROP DATABASE IF EXISTS jv_internet_shop;
 CREATE DATABASE jv_internet_shop;
 use jv_internet_shop;
 CREATE TABLE item
@@ -42,8 +42,8 @@ CREATE TABLE user_role
 (
     user_id BIGINT,
     role_id BIGINT,
-    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE,
-    FOREIGN KEY (role_id) REFERENCES role (id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES role (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 INSERT INTO role(name)
@@ -56,30 +56,30 @@ CREATE TABLE bucket
 (
     id      BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id BIGINT,
-    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE bucket_item
 (
     bucket_id BIGINT,
     item_id   BIGINT,
-    FOREIGN KEY (bucket_id) REFERENCES bucket (id) ON DELETE CASCADE,
-    FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE
+    FOREIGN KEY (bucket_id) REFERENCES bucket (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (item_id) REFERENCES item (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE `order`
 (
     id      BIGINT PRIMARY KEY AUTO_INCREMENT,
     user_id BIGINT,
-    FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES user (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE order_item
 (
     order_id BIGINT,
     item_id  BIGINT,
-    FOREIGN KEY (order_id) REFERENCES `order` (id) ON DELETE CASCADE,
-    FOREIGN KEY (item_id) REFERENCES item (id) ON DELETE CASCADE
+    FOREIGN KEY (order_id) REFERENCES `order` (id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (item_id) REFERENCES item (id) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 ALTER TABLE user
