@@ -97,7 +97,6 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
         return deletedBucket;
     }
 
-    @Override
     public Bucket addItem(Long bucketId, Long itemId) {
         Bucket bucket = null;
         try (PreparedStatement statement = connection
@@ -112,7 +111,6 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
         return bucket;
     }
 
-    @Override
     public Bucket clear(Long bucketId) {
         Bucket bucket = null;
         try (PreparedStatement statement = connection.prepareStatement(SQL_CLEAR_BUCKET)) {
@@ -148,7 +146,6 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
         return items;
     }
 
-    @Override
     public Bucket removeItemFromBucket(Long bucketId, Long itemId) {
         Bucket bucket = null;
         try (PreparedStatement statement = connection

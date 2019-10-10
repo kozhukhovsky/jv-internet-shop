@@ -1,23 +1,40 @@
 package mate.academy.internetshop.model;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "user")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String login;
     private String password;
+    @Column(columnDefinition = "BINARY")
     private byte[] salt;
     private String token;
-    private List<Order> orders;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
     public User() {
-        orders = new ArrayList<>();
         roles = new HashSet<>();
         token = UUID.randomUUID().toString();
     }
@@ -74,19 +91,36 @@ public class User {
         this.salt = salt;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
-
     public Set<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return id.equals(user.id)
+                && name.equals(user.name)
+                && login.equals(user.login)
+                && password.equals(user.password)
+                && Arrays.equals(salt, user.salt)
+                && token.equals(user.token)
+                && roles.equals(user.roles);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, name, login, password, token, roles);
+        result = 31 * result + Arrays.hashCode(salt);
+        return result;
     }
 }

@@ -43,12 +43,10 @@ public class BucketDaoImpl implements BucketDao {
         return deletedBucket;
     }
 
-    @Override
     public Bucket addItem(Long bucketId, Long itemId) {
         return null;
     }
 
-    @Override
     public Bucket clear(Long bucketId) {
         return null;
     }
@@ -58,7 +56,6 @@ public class BucketDaoImpl implements BucketDao {
         return null;
     }
 
-    @Override
     public Bucket removeItemFromBucket(Long bucketId, Long itemId) {
         return null;
     }

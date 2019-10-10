@@ -40,7 +40,7 @@ public class InjectDataController extends HttpServlet {
         } catch (RegistrationException e) {
             e.printStackTrace();
         }
-        Bucket usersBucket = new Bucket(user.getId());
+        Bucket usersBucket = new Bucket(user);
         bucketService.create(usersBucket);
 
         Role adminRole = roleService.getByName("ADMIN");
@@ -54,7 +54,7 @@ public class InjectDataController extends HttpServlet {
         } catch (RegistrationException e) {
             e.printStackTrace();
         }
-        Bucket adminsBucket = new Bucket(admin.getId());
+        Bucket adminsBucket = new Bucket(admin);
         bucketService.create(adminsBucket);
 
         resp.sendRedirect(req.getContextPath() + "/");

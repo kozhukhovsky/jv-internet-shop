@@ -22,7 +22,7 @@ public class GetAllItemsFromBucketController extends HttpServlet {
             throws ServletException, IOException {
         Long userId = (Long) req.getSession(true).getAttribute("userId");
         Bucket bucket = bucketService.get(userId);
-        List<Item> items = bucketService.getAllItems(bucket.getId());
+        List<Item> items = bucket.getItems();
         req.setAttribute("items", items);
         req.setAttribute("bucket_id", bucket.getId());
 

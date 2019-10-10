@@ -13,11 +13,5 @@ public interface BucketDao {
 
     Bucket deleteById(Long id);
 
-    Bucket addItem(Long bucketId, Long itemId);
-
-    Bucket clear(Long bucketId);
-
     List<Item> getAllItems(Long bucketId);
-
-    Bucket removeItemFromBucket(Long bucketId, Long itemId);
 }
