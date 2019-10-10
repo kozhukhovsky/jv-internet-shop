@@ -1,5 +1,6 @@
 package mate.academy.internetshop.dao.hibernate;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.internetshop.dao.UserDao;
@@ -9,7 +10,6 @@ import mate.academy.internetshop.lib.annotation.Dao;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.util.HibernateUtil;
 import org.apache.log4j.Logger;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -22,7 +22,9 @@ public class UserDaoHibernateImpl implements UserDao {
     public User create(User user) throws RegistrationException {
         Transaction transaction = null;
         Long userId = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             userId = (Long) session.save(user);
             transaction.commit();
@@ -30,6 +32,10 @@ public class UserDaoHibernateImpl implements UserDao {
             logger.error("Can't create user", e);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         user.setId(userId);
@@ -40,7 +46,6 @@ public class UserDaoHibernateImpl implements UserDao {
     public User get(Long id) {
         try (Session session = HibernateUtil.sessionFactory().openSession()) {
             User user = session.get(User.class, id);
-            Hibernate.initialize(user.getRoles());
             return user;
         } catch (Exception e) {
             logger.error("Can't get user by id=" + id);
@@ -51,7 +56,9 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public User update(User user) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             session.update(user);
             transaction.commit();
@@ -59,6 +66,10 @@ public class UserDaoHibernateImpl implements UserDao {
             logger.error("Can't update user id=" + user.getId(), e);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         return user;
@@ -68,7 +79,9 @@ public class UserDaoHibernateImpl implements UserDao {
     public User deleteById(Long id) {
         User user = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             user = get(id);
             session.delete(user);
@@ -77,6 +90,10 @@ public class UserDaoHibernateImpl implements UserDao {
             logger.error("Can't delete user id=" + id);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         return user;
@@ -88,8 +105,8 @@ public class UserDaoHibernateImpl implements UserDao {
             return session.createQuery("FROM User").list();
         } catch (Exception e) {
             logger.error("Can't get all users", e);
-            throw new RuntimeException(e);
         }
+        return Collections.emptyList();
     }
 
     @Override
@@ -100,12 +117,11 @@ public class UserDaoHibernateImpl implements UserDao {
             query.setParameter("login", login);
             query.setParameter("password", password);
             User user = (User) query.getSingleResult();
-            Hibernate.initialize(user.getRoles());
             return user;
         } catch (Exception e) {
             logger.error("Can't login user", e);
+            throw new AuthenticationException(e.getMessage());
         }
-        return null;
     }
 
     @Override
@@ -114,7 +130,6 @@ public class UserDaoHibernateImpl implements UserDao {
             Query query = session.createQuery("from User where token=:token");
             query.setParameter("token", token);
             User user = (User) query.getSingleResult();
-            Hibernate.initialize(user.getRoles());
             return Optional.ofNullable(user);
         } catch (Exception e) {
             logger.error("Can't get user by token", e);
@@ -123,14 +138,14 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     @Override
-    public User getByLogin(String login) {
+    public User getByLogin(String login) throws AuthenticationException {
         try (Session session = HibernateUtil.sessionFactory().openSession()) {
             Query query = session.createQuery("from User where login=:login");
             query.setParameter("login", login);
             return (User) query.getSingleResult();
         } catch (Exception e) {
             logger.error("Can't get user by login", e);
+            throw new AuthenticationException(e.getMessage());
         }
-        return null;
     }
 }

@@ -18,7 +18,9 @@ public class BucketDaoHibernateImpl implements BucketDao {
     public Bucket create(Bucket bucket) {
         Transaction transaction = null;
         Long bucketId = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             bucketId = (Long) session.save(bucket);
             transaction.commit();
@@ -26,6 +28,10 @@ public class BucketDaoHibernateImpl implements BucketDao {
             logger.error("Can't create bucket", e);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         bucket.setId(bucketId);
@@ -46,7 +52,9 @@ public class BucketDaoHibernateImpl implements BucketDao {
     @Override
     public Bucket update(Bucket bucket) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             session.update(bucket);
             transaction.commit();
@@ -54,6 +62,10 @@ public class BucketDaoHibernateImpl implements BucketDao {
             logger.error("Can't update bucket id=" + bucket.getId(), e);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         return bucket;
@@ -63,7 +75,9 @@ public class BucketDaoHibernateImpl implements BucketDao {
     public Bucket deleteById(Long id) {
         Bucket bucket = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             bucket = get(id);
             session.delete(bucket);
@@ -72,6 +86,10 @@ public class BucketDaoHibernateImpl implements BucketDao {
             logger.error("Can't delete bucket id=" + id);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         return bucket;
