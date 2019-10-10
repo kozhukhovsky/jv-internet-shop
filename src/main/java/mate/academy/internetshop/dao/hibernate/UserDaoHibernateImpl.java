@@ -22,7 +22,9 @@ public class UserDaoHibernateImpl implements UserDao {
     public User create(User user) throws RegistrationException {
         Transaction transaction = null;
         Long userId = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             userId = (Long) session.save(user);
             transaction.commit();
@@ -30,6 +32,10 @@ public class UserDaoHibernateImpl implements UserDao {
             logger.error("Can't create user", e);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         user.setId(userId);
@@ -50,7 +56,9 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public User update(User user) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             session.update(user);
             transaction.commit();
@@ -58,6 +66,10 @@ public class UserDaoHibernateImpl implements UserDao {
             logger.error("Can't update user id=" + user.getId(), e);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         return user;
@@ -67,7 +79,9 @@ public class UserDaoHibernateImpl implements UserDao {
     public User deleteById(Long id) {
         User user = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             user = get(id);
             session.delete(user);
@@ -76,6 +90,10 @@ public class UserDaoHibernateImpl implements UserDao {
             logger.error("Can't delete user id=" + id);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         return user;

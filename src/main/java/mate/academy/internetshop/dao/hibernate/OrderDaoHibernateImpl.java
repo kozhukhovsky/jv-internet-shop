@@ -19,7 +19,9 @@ public class OrderDaoHibernateImpl implements OrderDao {
     public Order create(Order order) {
         Transaction transaction = null;
         Long orderId = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             orderId = (Long) session.save(order);
             transaction.commit();
@@ -27,6 +29,10 @@ public class OrderDaoHibernateImpl implements OrderDao {
             logger.error("Can't create order", e);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         order.setId(orderId);
@@ -47,7 +53,9 @@ public class OrderDaoHibernateImpl implements OrderDao {
     @Override
     public Order update(Order order) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             session.update(order);
             transaction.commit();
@@ -55,6 +63,10 @@ public class OrderDaoHibernateImpl implements OrderDao {
             logger.error("Can't update order id=" + order.getId(), e);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         return order;
@@ -64,7 +76,9 @@ public class OrderDaoHibernateImpl implements OrderDao {
     public Order deleteById(Long id) {
         Order order = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             order = get(id);
             session.delete(order);
@@ -73,6 +87,10 @@ public class OrderDaoHibernateImpl implements OrderDao {
             logger.error("Can't delete order id=" + id, e);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         return order;

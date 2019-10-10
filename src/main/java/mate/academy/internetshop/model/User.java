@@ -35,7 +35,6 @@ public class User {
     private Set<Role> roles;
 
     public User() {
-        //orders = new ArrayList<>();
         roles = new HashSet<>();
         token = UUID.randomUUID().toString();
     }

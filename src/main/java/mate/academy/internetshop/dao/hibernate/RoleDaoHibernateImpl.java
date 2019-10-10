@@ -17,7 +17,9 @@ public class RoleDaoHibernateImpl implements RoleDao {
     public Role create(Role role) {
         Transaction transaction = null;
         Long roleId = null;
-        try (Session session = HibernateUtil.sessionFactory().openSession()) {
+        Session session = null;
+        try {
+            session = HibernateUtil.sessionFactory().openSession();
             transaction = session.beginTransaction();
             roleId = (Long) session.save(role);
             transaction.commit();
@@ -25,6 +27,10 @@ public class RoleDaoHibernateImpl implements RoleDao {
             logger.error("Can't create role", e);
             if (transaction != null) {
                 transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
             }
         }
         role.setId(roleId);
