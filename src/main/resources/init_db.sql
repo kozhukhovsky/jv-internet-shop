@@ -1,6 +1,6 @@
-drop database jv_internet_shop;
 CREATE DATABASE jv_internet_shop;
-use jv_internet_shop;
+
+USE jv_internet_shop;
 
 CREATE TABLE item
 (
