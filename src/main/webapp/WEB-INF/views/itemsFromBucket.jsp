@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Users</title>
+        <title>Items</title>
         <link rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     </head>
@@ -70,28 +70,22 @@
         </nav>
         <section class="section">
             <div class="columns is-centered">
-                <div class="column is-three-fifths">
-                    <h1 class="title">Users</h1>
+                <div class="column is-half">
+                    <h1 class="title">Items</h1>
                     <table class="table is-striped is-fullwidth">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Login</th>
                                 <th>Name</th>
-                                <th>Roles</th>
-                                <th></th>
+                                <th>Price</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach var="user" items="${users}">
+                            <c:forEach var="item" items="${items}">
                                 <tr>
-                                    <td><c:out value="${user.id}"/></td>
-                                    <td><c:out value="${user.login}"/></td>
-                                    <td><c:out value="${user.name}"/></td>
-                                    <td><c:out value="${user.roles}"/></td>
-                                    <td><a class="button is-danger"
-                                           href="${pageContext.request.contextPath}/servlet/admin/deleteUser?user_id=${user.id}">
-                                        Delete</a></td></td>
+                                    <td><c:out value="${item.id}"/></td>
+                                    <td><c:out value="${item.name}"/></td>
+                                    <td><c:out value="${item.price}"/></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
