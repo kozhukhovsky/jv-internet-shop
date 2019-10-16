@@ -21,7 +21,7 @@ public class Injector {
         try {
             classes.addAll(getClasses(PROJECT_MAIN_PACKAGE));
         } catch (ClassNotFoundException | IOException e) {
-            logger.error(e);
+            logger.error("Can't get classes from package: " + PROJECT_MAIN_PACKAGE, e);
         }
     }
 

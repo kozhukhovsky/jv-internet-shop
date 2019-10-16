@@ -14,9 +14,12 @@ import me.kozhukhovsky.internetshop.model.User;
 import me.kozhukhovsky.internetshop.service.BucketService;
 import me.kozhukhovsky.internetshop.service.RoleService;
 import me.kozhukhovsky.internetshop.service.UserService;
+import org.apache.log4j.Logger;
 
 @WebServlet("/inject")
 public class InjectDataController extends HttpServlet {
+    private static Logger logger = Logger.getLogger(InjectDataController.class);
+
     @Inject
     private static UserService userService;
 
@@ -41,7 +44,7 @@ public class InjectDataController extends HttpServlet {
         try {
             userService.create(root);
         } catch (RegistrationException e) {
-            e.printStackTrace();
+            logger.error("Can't inject user", e);
         }
         Bucket rootsBucket = new Bucket(root);
         bucketService.create(rootsBucket);
@@ -54,7 +57,7 @@ public class InjectDataController extends HttpServlet {
         try {
             userService.create(user);
         } catch (RegistrationException e) {
-            e.printStackTrace();
+            logger.error("Can't inject user", e);
         }
         Bucket usersBucket = new Bucket(user);
         bucketService.create(usersBucket);
@@ -67,7 +70,7 @@ public class InjectDataController extends HttpServlet {
         try {
             userService.create(admin);
         } catch (RegistrationException e) {
-            e.printStackTrace();
+            logger.error("Can't inject user", e);
         }
         Bucket adminsBucket = new Bucket(admin);
         bucketService.create(adminsBucket);

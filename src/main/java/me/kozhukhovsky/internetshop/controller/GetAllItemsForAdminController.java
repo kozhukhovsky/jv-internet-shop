@@ -12,7 +12,7 @@ import me.kozhukhovsky.internetshop.model.Item;
 import me.kozhukhovsky.internetshop.service.ItemService;
 
 @WebServlet("/servlet/admin/items")
-public class EditItemsController extends HttpServlet {
+public class GetAllItemsForAdminController extends HttpServlet {
     @Inject
     private static ItemService itemService;
 

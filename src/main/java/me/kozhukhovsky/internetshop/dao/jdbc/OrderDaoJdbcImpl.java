@@ -79,8 +79,8 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
     }
 
     private Order getOrder(ResultSet resultSet) throws SQLException {
-        long orderId = resultSet.getLong("id");
-        long userIdFromOrder = resultSet.getLong("user_id");
+        Long orderId = resultSet.getLong("id");
+        Long userIdFromOrder = resultSet.getLong("user_id");
         List<Item> items = getAllItems(orderId);
         Order order = new Order();
         order.setId(orderId);
@@ -95,9 +95,9 @@ public class OrderDaoJdbcImpl extends AbstractDao<Order> implements OrderDao {
             statement.setLong(1, orderId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                long itemId = resultSet.getLong("id");
+                Long itemId = resultSet.getLong("id");
                 String name = resultSet.getString("name");
-                double price = resultSet.getDouble("price");
+                Double price = resultSet.getDouble("price");
                 Item item = new Item();
                 item.setId(itemId);
                 item.setName(name);
