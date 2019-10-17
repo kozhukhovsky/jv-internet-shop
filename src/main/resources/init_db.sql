@@ -1,5 +1,7 @@
 CREATE DATABASE jv_internet_shop;
 
+USE jv_internet_shop;
+
 CREATE TABLE item
 (
     id    BIGINT PRIMARY KEY AUTO_INCREMENT,
@@ -26,7 +28,7 @@ CREATE TABLE user
 (
     id       BIGINT PRIMARY KEY AUTO_INCREMENT,
     name     VARCHAR(255),
-    login    VARCHAR(255) NOT NULL,
+    login    VARCHAR(255) NOT NULL UNIQUE ,
     password VARCHAR(255) NOT NULL,
     token    VARCHAR(255)
 );
