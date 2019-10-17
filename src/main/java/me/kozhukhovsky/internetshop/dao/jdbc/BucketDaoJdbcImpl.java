@@ -59,8 +59,8 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 Bucket bucket = new Bucket();
-                long bucketId = resultSet.getLong("id");
-                long userId = resultSet.getLong("user_id");
+                Long bucketId = resultSet.getLong("id");
+                Long userId = resultSet.getLong("user_id");
                 List<Item> items = getAllItems(bucketId);
                 bucket.setId(bucketId);
                 bucket.setUserId(userId);
@@ -132,9 +132,9 @@ public class BucketDaoJdbcImpl extends AbstractDao<Bucket> implements BucketDao 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Item item = new Item();
-                long itemId = resultSet.getLong("id");
+                Long itemId = resultSet.getLong("id");
                 String name = resultSet.getString("name");
-                double price = resultSet.getDouble("price");
+                Double price = resultSet.getDouble("price");
                 item.setId(itemId);
                 item.setName(name);
                 item.setPrice(price);

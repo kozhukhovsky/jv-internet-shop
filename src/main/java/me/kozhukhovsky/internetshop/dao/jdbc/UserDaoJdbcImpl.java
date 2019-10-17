@@ -54,7 +54,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-                long userId = generatedKeys.getLong(1);
+                Long userId = generatedKeys.getLong(1);
                 user.setId(userId);
             } else {
                 throw new SQLException("Creating user failed, no ID obtained.");
@@ -98,7 +98,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
 
     private User getUser(ResultSet resultSet) throws SQLException {
         User user = new User();
-        long userId = resultSet.getLong("id");
+        Long userId = resultSet.getLong("id");
         String name = resultSet.getString("name");
         String login = resultSet.getString("login");
         String password = resultSet.getString("password");
@@ -122,7 +122,7 @@ public class UserDaoJdbcImpl extends AbstractDao<User> implements UserDao {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Role role = new Role();
-                long roleId = resultSet.getLong("id");
+                Long roleId = resultSet.getLong("id");
                 String roleName = resultSet.getString("name");
                 role.setId(roleId);
                 role.setName(roleName);
