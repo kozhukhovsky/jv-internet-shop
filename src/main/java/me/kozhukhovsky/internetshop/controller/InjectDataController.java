@@ -35,20 +35,6 @@ public class InjectDataController extends HttpServlet {
         Role adminRole = roleService.getByName("ADMIN");
         Role userRole = roleService.getByName("USER");
 
-        User root = new User();
-        root.setName("Anton");
-        root.setLogin("root");
-        root.setPassword("123");
-        root.addRole(adminRole);
-        root.addRole(userRole);
-        try {
-            userService.create(root);
-        } catch (RegistrationException e) {
-            logger.error("Can't inject user", e);
-        }
-        Bucket rootsBucket = new Bucket(root);
-        bucketService.create(rootsBucket);
-
         User user = new User();
         user.setName("Jack");
         user.setLogin("user");
